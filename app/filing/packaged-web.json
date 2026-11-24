@@ -1,0 +1,266 @@
+{
+  "23b161e6d3d0eabdab537154e05549df070dffed67cc7c735969ea2b632a9fdf": {
+    "proofSha256": "8a8d7cb1b25837a76c69a6471e1fbe9b40e2d7b8fecea84da0db9a381dfe02f7",
+    "decisions": [
+      {
+        "url": "/index.html",
+        "sha256": "01a7c3942d9fdf78b993af77e14f3a2017993f54769c83b1b4e7b8483562adf5",
+        "decision": "纳入",
+        "path": "index.html",
+        "reason": "简体版实际入口。页面包含两条计算流程的表单、事件绑定、校验和输出交互。"
+      },
+      {
+        "url": "/static/script/index.js",
+        "sha256": "0cf4d28f4f264f43a13d8262188d5918a532a35325ce270d1755c095cb6bb323",
+        "decision": "纳入",
+        "path": "static/script/index.js",
+        "reason": "同版页面辅助交互脚本，原源码归档与运行响应逐字节一致。"
+      },
+      {
+        "url": "/static/style/index.css",
+        "sha256": "5b03fb4ede8c47a59cf73e3cf98dfa401be1175f99f62c23f95215f16040d28e",
+        "decision": "纳入",
+        "path": "static/style/index.css",
+        "reason": "同版页面样式，原源码归档与运行响应逐字节一致。"
+      },
+      {
+        "url": "/zh-HK.html",
+        "sha256": null,
+        "decision": "排除",
+        "path": "zh-HK.html",
+        "reason": "源包存在的独立繁体入口。这次走简体入口，无繁体响应。简体页运行用的方言词库仍纳入。"
+      },
+      {
+        "url": "/dist/relationship.min.js",
+        "sha256": "26a43fd116381f8264cfa5574c858c0ffc735ec5e225bab1f6c71d301b997603",
+        "decision": "排除",
+        "path": "src/relationship.js",
+        "reason": "构建产物。归档中的 Rollup 配置从该模块打包，交存原源码。",
+        "basisFile": {
+          "path": "rollup.config.mjs",
+          "sha256": "c3c371573f6b584af563f9fd1cb05a0f85b7101a8b4b6f1ba0275231321e28cb"
+        }
+      },
+      {
+        "url": "/dist/relationship-mode.min.js",
+        "sha256": "3cba3ff0dad850d76352d82b76fc862fe9e8628d0262bbe9aa709f641530fd93",
+        "decision": "排除",
+        "path": "src/relationship-mode.js",
+        "reason": "构建产物。归档中的 Rollup 配置从该模块打包，交存原源码。",
+        "basisFile": {
+          "path": "rollup.config.mjs",
+          "sha256": "c3c371573f6b584af563f9fd1cb05a0f85b7101a8b4b6f1ba0275231321e28cb"
+        }
+      },
+      {
+        "url": "/static/image/app.png",
+        "sha256": "376a33233e97977db2986273f95b8b86d2533bac92fc32e642f0520ca0d4aa5f",
+        "decision": "排除",
+        "path": "static/image/app.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/draw/1.svg",
+        "sha256": "e3708a693ff9eb02ae7d5bbd0271c07c675aaaafbeb21ef639138bf52698010b",
+        "decision": "排除",
+        "path": "static/image/draw/1.svg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/draw/2.svg",
+        "sha256": "29ced0d570642b51fc077ba1b9d3ca70ff3bcf7ce891274ff5c1b9d0e08aabd2",
+        "decision": "排除",
+        "path": "static/image/draw/2.svg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/qrcode.png",
+        "sha256": "75837358fe920d34970fd4f2ee430bf926a8312443dce31c897ecd0c96da0bdc",
+        "decision": "排除",
+        "path": "static/image/qrcode.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/draw/3.svg",
+        "sha256": "e0283c25819c91759af55a87cfc61aed42cda00c9afdb61a2f57809811efe409",
+        "decision": "排除",
+        "path": "static/image/draw/3.svg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/draw/4.svg",
+        "sha256": "826caf7b8b1b07fab635d3e8cea63d55877b6d3666d5478d718ede8c371303b7",
+        "decision": "排除",
+        "path": "static/image/draw/4.svg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/icon/miui.png",
+        "sha256": "4501862fba0fa7a438ab71539d676b8075e1b6f194ec4dc09ed6013b3f63293e",
+        "decision": "排除",
+        "path": "static/image/icon/miui.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/icon/quanneng.png",
+        "sha256": "f0c9d767a578b31924aafe659c033484b42ad2f404c3303d2bf857a0e9deda6a",
+        "decision": "排除",
+        "path": "static/image/icon/quanneng.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/icon/yuwendaren.png",
+        "sha256": "4bd15d523a911c491b1c2ab740b6fecfd3397afb0e9cdcb66d4f2fec08333c0f",
+        "decision": "排除",
+        "path": "static/image/icon/yuwendaren.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/icon/qinqi.png",
+        "sha256": "1a5da06fb38be453d4295d4afbb1b5b82bb0027ff2a944575e23539813dacff2",
+        "decision": "排除",
+        "path": "static/image/icon/qinqi.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/qrcode-wechat.jpg",
+        "sha256": "65fca15bc5454ffb4d5dc62a2c7eccf19ff8efb3adf60a3ac8b1261f7398dec0",
+        "decision": "排除",
+        "path": "static/image/qrcode-wechat.jpg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/qrcode-alipay.jpg",
+        "sha256": "b432d388ced5be6be4450b3325a4ac3bdadc835681d6d7badd36a00b81407d6f",
+        "decision": "排除",
+        "path": "static/image/qrcode-alipay.jpg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/scan.png",
+        "sha256": "5ffb98ea7df5c65da2ab5e74b2a3bfbfcb2e330a743e0bb949a2b13727a80706",
+        "decision": "排除",
+        "path": "static/image/scan.png",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      },
+      {
+        "url": "/static/image/summary-bg.svg",
+        "sha256": "fea23c37f5dfb1fa18a7aedb1cfb8785297082572daa8b0f279231eed202125b",
+        "decision": "排除",
+        "path": "static/image/summary-bg.svg",
+        "reason": "二维码、推广图标或关系示意图等静态画面资源，保留在复走原包。"
+      }
+    ],
+    "replay": [
+      {
+        "name": "中国亲戚关系计算器 V1.2.8 源码.zip",
+        "sha256": "23b161e6d3d0eabdab537154e05549df070dffed67cc7c735969ea2b632a9fdf",
+        "container": true
+      }
+    ],
+    "launch": [
+      "在取件包「可复走原件」解压 中国亲戚关系计算器 V1.2.8 源码.zip。",
+      "进入解压出的 relationship-3739353063f9b1906e6ee02afddeeef21b900a57 目录，确认含 index.html。",
+      "先安装 Python 3，使用终端在所列目录启动本地服务。",
+      "运行：python3 -m http.server 8000 --bind 127.0.0.1",
+      "浏览器打开 http://127.0.0.1:8000/index.html，看到简体计算界面后开始。"
+    ]
+  },
+  "9749f69d730a1a8e6e8a4dfdda13b5dca932ce25acf0480b0305dedcb04f95d8": {
+    "proofSha256": "08967b13beb76973b31194e7890f141fd62271587b6d0cb2be18b1f1c0a0b76c",
+    "decisions": [
+      {
+        "url": "/",
+        "sha256": "ff61402cdf7cdc199482a46f2672412f528920ca9718587e4b63ba2961403077",
+        "decision": "排除",
+        "path": null,
+        "reason": "浏览器核验装载页，初始化 zh_CN 和分屏模式；只作为复走辅助。"
+      },
+      {
+        "url": "/dist/index.min.js",
+        "sha256": "aac93a3647a200b324dbb40734c173893205fe2ed7330336dd376582d33a04cd",
+        "decision": "排除",
+        "path": "src/index.ts",
+        "reason": "webpack 从 src/index.ts 打包，交存对应模块源文件，避免重复交存压缩输出。"
+      },
+      {
+        "url": "/dist/index.css",
+        "sha256": "c6e693e24d3c0b472b435d48d9baff62bee62d13f5265723265256e73f310dba",
+        "decision": "排除",
+        "path": "src/assets/less",
+        "reason": "webpack 处理 Less/CSS 后输出，交存对应样式源。"
+      },
+      {
+        "url": "/dist/js/i18n/zh_CN.js",
+        "sha256": "6a0c07e6c40f934715b0bebcea20bdbbf20c34ba70ab9ea8d22336a1c47ab09c",
+        "decision": "纳入",
+        "path": "src/js/i18n/zh_CN.js",
+        "reason": "发布文件与固定提交源文件同指纹。src/index.ts 读取 window.VditorI18n 初始化简体中文界面。"
+      },
+      {
+        "url": "/dist/css/content-theme/light.css",
+        "sha256": "9848c5a4d637f1803859b18ece4aa9df17d03a706f3d6416ba729c357d4ee360",
+        "decision": "纳入",
+        "path": "src/css/content-theme/light.css",
+        "reason": "发布文件与带 B3log MIT 声明的固定提交源同指纹，提供本次预览默认浅色排版。"
+      },
+      {
+        "url": "/dist/js/icons/ant.js",
+        "sha256": "a91e14e09dcd7b99f49b7b8dcc6301fed6774d62547fcf4e971757aa3a802c33",
+        "decision": "排除",
+        "path": "src/js/icons/ant.js",
+        "reason": "固定提交文件与发布响应同指纹，文件仅注入 SVG 图标符号，保留图标随原发行包。"
+      },
+      {
+        "url": "/dist/js/lute/lute.min.js",
+        "sha256": "53b61b051a3dfd9ee5a5010c873233679e139d8e62c49da08b4c2f2c195587cb",
+        "decision": "排除",
+        "path": null,
+        "reason": "Lute 渲染依赖。Vditor 调用第三方接口，发行依赖仅用于复走。"
+      },
+      {
+        "url": "/dist/js/highlight.js/styles/github.min.css",
+        "sha256": "5f5db2458549f8b86de973acd7d5d7b26ff5413c07f26aa3f42b054b943c3448",
+        "decision": "排除",
+        "path": null,
+        "reason": "highlight.js 的 GitHub 风格资源，响应已记录，未以本次动作宣称语法高亮验收。"
+      }
+    ],
+    "replay": [
+      {
+        "name": "vditor-4.0.1.tgz",
+        "sha256": "b72767473a6220c0363abda5845a21762574190a247d07f27281caa07f66745b",
+        "file": "运行证据/v0.3.21-中文新案双测-2026-11-23/Vditor/公开原件/vditor-4.0.1.tgz"
+      },
+      {
+        "name": "index.html",
+        "sha256": "ff61402cdf7cdc199482a46f2672412f528920ca9718587e4b63ba2961403077",
+        "file": "app/filing/web-sources/vditor-launch.html"
+      }
+    ],
+    "supplements": [
+      {
+        "url": "/dist/js/i18n/zh_CN.js",
+        "path": "src/js/i18n/zh_CN.js",
+        "sha256": "6a0c07e6c40f934715b0bebcea20bdbbf20c34ba70ab9ea8d22336a1c47ab09c",
+        "file": "app/filing/web-sources/zh_CN.js",
+        "origin": "https://github.com/Vanessa219/vditor/blob/3a0c64cf97345c2b8a0e1d6d53abbc787d53988c/src/js/i18n/zh_CN.js"
+      },
+      {
+        "url": "/dist/css/content-theme/light.css",
+        "path": "src/css/content-theme/light.css",
+        "sha256": "9848c5a4d637f1803859b18ece4aa9df17d03a706f3d6416ba729c357d4ee360",
+        "file": "app/filing/web-sources/light.css",
+        "origin": "https://github.com/Vanessa219/vditor/blob/3a0c64cf97345c2b8a0e1d6d53abbc787d53988c/src/css/content-theme/light.css"
+      }
+    ],
+    "launch": [
+      "从取件包「可复走原件」解压 vditor-4.0.1.tgz，得到 package 目录。",
+      "将该取件目录的 index.html 复制到 package 根目录，与 dist 同级。",
+      "先安装 Python 3，在终端进入 package 目录。",
+      "运行：python3 -m http.server 8000 --bind 127.0.0.1",
+      "浏览器打开 http://127.0.0.1:8000/。",
+      "中文工具栏和左侧源码、右侧预览出现后开始。"
+    ]
+  }
+}

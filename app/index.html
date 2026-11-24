@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>软著材料工作台</title>
+<style>
+:root{color-scheme:light;--paper:#f4f6f5;--ink:#192a25;--muted:#51645e;--line:#dbe5df;--accent:#155b46;--pale:#e8f4ed;--white:#fff;--warning:#783e16;--rose:#fff1e8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+header{background:#103d31;color:white;padding:23px max(5vw,24px) 62px}.brand{display:flex;gap:11px;align-items:center;font-weight:650}.mark{display:grid;place-items:center;border:1px solid #72b29a80;border-radius:10px;width:34px;height:34px;color:#a2e2ca}.local{margin-left:auto;font-size:13px;color:#def3e8}
+h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.045em;margin:32px 0 5px;line-height:1.14}header p{margin:0;color:#d5e7e0}
+main{max-width:1220px;margin:-34px auto 42px;padding:0 24px}.layout{display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:16px;align-items:start}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--white);padding:20px;margin-bottom:14px;box-shadow:0 4px 12px #233e2f07}h2{font-size:20px;line-height:1.25;margin:0 0 14px}h3{font-size:15px;margin:0 0 8px}
+p{margin:8px 0;color:var(--muted)}.sub{font-size:13px;color:var(--muted)}.buttons{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:13px}
+button,.button{padding:8px 12px;background:#fff;border:1px solid #bfcfc7;border-radius:7px;color:var(--ink);cursor:pointer;min-height:39px;display:inline-flex;align-items:center;font:inherit;text-decoration:none}
+button.primary,.button.primary{background:var(--accent);color:white;border-color:var(--accent)}button:hover,.button:hover{box-shadow:inset 0 0 0 1px currentColor}button:disabled{cursor:wait;opacity:.6}
+:focus-visible{outline:3px solid #407cdd;outline-offset:2px}textarea,input[type=text]{display:block;width:100%;border:1px solid #bfcfc7;border-radius:8px;padding:8px;color:var(--ink);background:white;font:inherit}textarea{min-height:82px;resize:vertical;margin-top:6px}label{font-weight:600}
+.drop{display:grid;gap:5px;border:1px dashed #8fada0;background:#f9fcfa;border-radius:10px;padding:14px;margin-bottom:12px;overflow-wrap:anywhere}.drop.on{background:var(--pale);border-color:var(--accent)}input[type=file]{max-width:100%;font:inherit}.separator{height:1px;background:var(--line);margin:15px 0}.status{background:var(--pale);padding:11px 13px;border-radius:8px;color:#214d3d}.error{color:var(--warning);background:var(--rose)}
+.pill{font-size:12px;background:var(--pale);border-radius:5px;padding:3px 6px;color:var(--accent);white-space:nowrap}.warn{background:var(--rose);color:var(--warning)}
+.scoreboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 16px}.score{background:#f1f7f3;padding:12px;border-radius:9px}.score strong{font-size:28px;letter-spacing:-.04em;color:var(--accent);display:block}
+details{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}summary{cursor:pointer;font-weight:600}
+ul{padding-left:21px;margin:8px 0}.row{padding:9px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.row:last-child{border-bottom:0}.row p{font-size:13px}.split{display:flex;align-items:start;gap:10px;justify-content:space-between}.path{min-width:0;overflow-wrap:anywhere}.change del{color:#84352a}.change ins{color:#175a43;text-decoration:none}.empty{min-height:260px;display:grid;place-content:center;text-align:center}
+a{color:var(--accent);text-underline-offset:3px}[hidden]{display:none!important}.withdraw{font-size:12px;padding:4px 8px;min-height:30px;flex-shrink:0}
+@media(max-width:780px){.layout{grid-template-columns:1fr}main{padding:0 13px}header{padding-left:15px;padding-right:15px}.empty{min-height:160px}}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><span class="mark" aria-hidden="true">著</span><span>软著材料工作台</span><span class="local">本地 · 内部审阅</span></div>
+<h1>从已有材料开始</h1>
+<p>把源码、旧稿和表单放进同一案卷，核对版本、写回草稿并下载已审核的材料。</p>
+</header>
+<main class="layout">
+<section aria-label="案卷操作">
+  <div class="card">
+    <h2 id="upload-title">上传材料</h2>
+    <form id="upload">
+      <div class="drop" id="drop">
+        <label for="files">文件或 ZIP</label><input id="files" type="file" multiple>
+        <label for="folder">源码目录</label><input id="folder" type="file" webkitdirectory multiple>
+        <span class="sub" id="selection">可拖入文件，单案最多 320 件、48 MiB。</span>
+      </div>
+      <div id="request-wrap"><label for="request">本案说明（选填）</label>
+        <textarea id="request" maxlength="2000" placeholder="例如：请用附件里的登记字段、源码和本版实操记录整理申请表底稿和说明书。缺证据的地方请标出。"></textarea>
+      </div>
+      <p class="sub">有同版实操记录和输出文件时，可将它们随源码一并上传。</p>
+      <details><summary>核对自备说明书与源码册</summary><p>上传现有申请表、说明书、源码册和对应发布源码 ZIP，在网页确认版本。如原件已写明功能、角色、前置条件、操作、预期结果和源码位置，工作台会逐项列出出处。已有交存核对清单或同版操作记录也可一并上传。</p></details>
+      <div class="buttons"><button type="submit" class="primary" id="upload-button">开始预检</button><a id="new-case" href="/" hidden>新建案卷</a></div>
+    </form>
+  </div>
+  <div class="card" id="stage-card" hidden>
+    <h2>案卷进度</h2><div id="stage" class="status" role="status"></div>
+    <form id="target" hidden>
+      <div class="separator"></div>
+      <label for="saved-request">本案说明</label>
+      <textarea id="saved-request" maxlength="2000"></textarea>
+      <div class="buttons"><button type="button" id="save-request">更新本案说明</button></div>
+      <label for="software-name">拟申报软件全称（选填）</label>
+      <input id="software-name" type="text" maxlength="100">
+      <label for="version">本次软件版本</label><input id="version" type="text" placeholder="V2.6.0">
+      <label id="snapshot-label" class="sub" hidden><input id="snapshot" type="checkbox"> 确认采用此固定源码快照</label>
+      <label class="sub"><input id="custom-scope" type="checkbox"> 指定本次应交材料</label>
+      <div id="material-selection" hidden>
+        <label><input type="checkbox" value="form"> 申请表底稿</label>
+        <label><input type="checkbox" value="manual"> 说明书 PDF</label>
+        <label><input type="checkbox" value="source"> 源程序交存件</label>
+      </div>
+      <div class="buttons"><button>确认版本</button></div>
+    </form>
+    <div class="buttons"><button class="primary" id="process">自动修订并复验</button><button id="retry-preflight" hidden>重试预检</button><button id="retry" hidden>重试审核</button></div>
+  </div>
+  <div id="notice" class="card status" role="status" aria-live="polite" hidden></div>
+</section>
+<section id="results" aria-label="案卷结果">
+  <div class="card empty"><div><h2>待上传案卷</h2><p>预检会显示识别到的文件、版本证据和重复附件。</p></div></div>
+</section>
+</main>
+<script type="module">
+import { safePath } from '/intake-paths.mjs';
+const $ = id=>document.getElementById(id);
+let current, dropped = [], busy = false;
+const idFromUrl = new URL(location.href).searchParams.get('case');
+let caseId = idFromUrl;
+const labels={uploaded:'等待预检',preflight:'预检完成',candidate:'候选已保存，等待只读复验',audited:'复验完成'};
+const materialTitles={form:'申请表底稿',manual:'说明书 PDF',source:'源程序交存件'};
+const materialInputs=()=>[...$('material-selection').querySelectorAll('input')];
+$('custom-scope').onchange=()=>{$('material-selection').hidden=!$('custom-scope').checked;};
+const el = (tag,text,css)=>{
+  const node=document.createElement(tag);
+  if(text!==undefined) node.textContent=text;
+  if(css) node.className=css;
+  return node;
+};
+const section = title=>{const node=el('div',undefined,'card');node.append(el('h2',title));return node;};
+const row = (title,detail)=>{
+  const node=el('div',undefined,'row');
+  node.append(el('strong',title,'path'));
+  if(detail) node.append(el('p',detail));
+  return node;
+};
+const details = (title,children)=>{
+  const node=el('details');node.append(el('summary',title),...children);return node;
+};
+const base = ()=>'/api/cases/'+caseId;
+function notice(message,error=false){
+  $('notice').hidden=!message;
+  $('notice').classList.toggle('error',error);
+  $('notice').textContent=message;
+}
+async function call(path,options){
+  const response=await fetch(path,options);
+  const payload=await response.json();
+  if(!response.ok) throw new Error(payload.error);
+  return payload;
+}
+function setBusy(value) {
+  busy=value;
+  document.querySelectorAll('button').forEach(button=>button.disabled=value);
+}
+async function act(path,message,body){
+  if(busy) return;
+  setBusy(true);notice(message);
+  try {
+    current=await call(path,{method:'POST',body,headers:current?{'x-case-revision':current.revision}:{}});
+    caseId=current.id;history.replaceState(null,'','/?case='+caseId);
+    render();notice('');
+  } catch(error) {
+    if(caseId) {
+      try {current=await call(base());render();} catch {}
+    }
+    notice(error.message,true);
+  } finally {setBusy(false);}
+}
+function link(title,href,primary=false){
+  const a=el('a',title,primary?'button primary':'');a.href=href;return a;
+}
+function submissionForm(item){
+  const form=el('form');
+  const inputs={};
+  function field(name,title,max){
+    const label=el('label',title);
+    const input=el('input');input.type='text';input.required=true;input.maxLength=max;
+    input.value=item.record?.[name] ?? '';
+    label.append(input);form.append(label);inputs[name]=input;
+  }
+  if(item.id==='channel') field('channel','实际办理通道',120);
+  field('responsible','材料责任人',80);
+  field('reviewer','经办复核人',80);
+  field('basis','核对依据和结论',500);
+  const evidence=el('fieldset');
+  evidence.append(el('legend','本次核看的附件'));
+  const proof=item.choices.map(file=>{
+    const box=el('input');box.type='checkbox';box.value=file.path;
+    box.checked=!!item.record?.evidence.some(ref=>ref.path===file.path && ref.hash===file.hash);
+    const label=el('label',undefined,'path');label.append(box,document.createTextNode(' '+file.path),el('br'));
+    evidence.append(label);return box;
+  });
+  form.append(evidence);
+  function checkbox(text){
+    const label=el('label');
+    const box=el('input');box.type='checkbox';
+    label.append(box,document.createTextNode(' '+text),el('br'));form.append(label);return box;
+  }
+  const notApplicable=item.id==='other' ? checkbox('本通道对此案无额外要求') : null;
+  if(notApplicable) notApplicable.checked=item.record?.outcome==='不适用';
+  const confirm=checkbox('我已核对所选原件及其在本案和本通道的适用性');
+  confirm.required=true;
+  form.append(el('button','保存'+item.title+'复核'));
+  form.onsubmit=event=>{
+    event.preventDefault();
+    act(base()+'/submission','正在保存经办复核并更新取件回执。',JSON.stringify({
+      id:item.id,...Object.fromEntries(Object.entries(inputs).map(([key,input])=>[key,input.value])),
+      paths:proof.filter(box=>box.checked).map(box=>box.value),
+      confirmed:confirm.checked,notApplicable:!!notApplicable?.checked,
+    }));
+  };
+  return form;
+}
+const correctionMaterials={form:'申请表',manual:'说明书',source:'源程序交存件',rights:'权利证明',response:'补正答复'};
+function correctionForm(notices,item){
+  const form=el('form');
+  const field=(title,input)=>{
+    const label=el('label',title);label.append(input);form.append(label);
+    return input;
+  };
+  const textField=(title,value,max,required=true)=>{
+    const input=el('input');input.maxLength=max;input.required=required;input.value=value??'';
+    return field(title,input);
+  };
+  const notice=field('补正通知原件',el('select'));
+  for(const file of notices){
+    const option=el('option',file.path);option.value=file.path;
+    option.selected=file.path===item?.notice.path;notice.append(option);
+  }
+  const page=el('input');page.type='number';page.min='1';page.required=true;page.value=item?.notice.page??1;
+  field('通知页码',page);
+  const issue=textField('通知要求',item?.issue,600);
+  const owner=textField('负责补件的人',item?.owner,80);
+  const materials=el('fieldset');materials.append(el('legend','受影响材料'));
+  const affected=Object.entries(correctionMaterials).map(([key,title])=>{
+    const box=el('input');box.type='checkbox';box.value=key;box.checked=item?.affects.includes(key)??false;
+    const label=el('label',title);label.append(box);materials.append(label);return box;
+  });
+  form.append(materials);
+  const links=el('select');links.multiple=true;
+  for(const file of current.entries){
+    if(notices.some(source=>source.path===file.path)) continue;
+    const option=el('option',file.path);option.value=file.path;
+    option.selected=item?.links.some(source=>source.path===file.path && source.hash===file.hash)??false;
+    links.append(option);
+  }
+  field('答复或依据附件',links);
+  const review=el('input');review.type='checkbox';review.disabled=!current.audit?.valid;
+  field('记录当前终件的内部复核',review);
+  const reviewer=textField('复核人',undefined,80,false);
+  const basis=textField('复核依据和改动页',undefined,600,false);
+  reviewer.disabled=basis.disabled=true;
+  review.onchange=()=>{reviewer.disabled=basis.disabled=!review.checked;reviewer.required=basis.required=review.checked;};
+  form.append(el('button','保存补正事项'));
+  form.onsubmit=event=>{
+    event.preventDefault();
+    act(base()+'/correction','正在保存补正事项。',JSON.stringify({
+      id:item?.id,notice:notice.value,page:page.value,issue:issue.value,owner:owner.value,
+      affects:affected.filter(box=>box.checked).map(box=>box.value),paths:[...links.selectedOptions].map(option=>option.value),
+      review:review.checked,reviewer:reviewer.value,basis:basis.value,
+    }));
+  };
+  return form;
+}
+function render(){
+  const {entries,preflight,audit,candidate,target,submission,correction}=current;
+  $('stage-card').hidden=false;
+  $('upload-title').textContent='补传或替换材料';
+  $('upload-button').textContent='保存材料并预检';
+  $('request-wrap').hidden=true;$('new-case').hidden=false;
+  $('stage').textContent='第 '+current.revision+' 版 · '+labels[current.stage]+(current.lastError?' · '+current.lastError:'');
+  if(audit?.valid && audit.work.missingDeliverables.length){
+    $('stage').textContent+=' · 应交材料未齐，可下载内部审阅包';
+  }
+  $('target').hidden=!preflight;
+  $('process').hidden=!preflight || !!preflight.work?.needsConfirmation;
+  $('saved-request').value=current.request ?? '';
+  $('process').textContent=preflight?.versionCheck?.blocking?'生成版本待核包':'自动修订并复验';
+  $('retry-preflight').hidden=!!preflight;
+  $('retry').hidden=current.stage!=='candidate';
+  $('version').value=target?.version ?? '';
+  $('software-name').value=current.softwareName ?? preflight?.work?.suggestedName ?? '';
+  $('custom-scope').checked=Array.isArray(current.materialSelection);
+  $('material-selection').hidden=!$('custom-scope').checked;
+  for(const input of materialInputs()) input.checked=preflight?.work.expected.includes(input.value) ?? false;
+  $('snapshot-label').hidden=!preflight?.choice;
+  $('snapshot').checked=!!target?.snapshot;
+  const result=$('results');result.replaceChildren();
+  if(preflight?.versionCheck){
+    const check=preflight.versionCheck;
+    const title='R2 起草前版本核对';
+    const card=section(title);
+    card.setAttribute('role','region');card.setAttribute('aria-label',title);
+    const stateLabels={conflict:'发现冲突 · 起草已暂缓',pending:'版本证据待补',
+      planned:'有依据安全写回 · 写回后复验',matched:'三路版本已对照'};
+    card.append(el('p',stateLabels[check.status],check.blocking?'warn':'status'));
+    for(const [key,label] of [['release','发布版本'],['runtime','实际运行版本'],['manuscript','稿件版本'],['target','拟申报版本']]){
+      const items=check.groups[key];
+      if(key==='target' && !items.length) continue;
+      card.append(row(label,items.length ? items.map(item=>[item.version??'待核',item.path,item.location,
+        item.ocr?'扫描识别':'' ].filter(Boolean).join(' · ')).join('；') : '暂无可核证据。'));
+    }
+    if(check.planned.length) card.append(row('可安全写回',
+      check.planned.map(item=>item.path+' '+item.location+' '+item.version+' → '+item.to).join('；')));
+    for(const item of check.questions) card.append(row(item.title+' · '+item.owner,item.detail));
+    result.append(card);
+  }
+  const applicationCheck=audit?.valid ? audit.applicationCheck : preflight?.applicationCheck;
+  if(applicationCheck){
+    const title='R3 申请主体、权属与签章';
+    const card=section(title);
+    card.setAttribute('role','region');card.setAttribute('aria-label',title);
+    const status={missing:'待补',conflict:'发现冲突',review:'待人工复核'};
+    const source=hit=>row(hit.field+' · '+hit.value,hit.path+' '+hit.location+(hit.ocr?'（扫描识别，待目验）':''));
+    for(const item of applicationCheck.items){
+      card.append(row(item.title+' · '+status[item.status],item.summary));
+      if(item.evidence.length || item.attachments.length) card.append(details(item.title+'的原件出处',[
+        ...item.evidence.map(source),...item.attachments.map(hit=>row('已收到',hit.path))]));
+    }
+    if(applicationCheck.references.length) card.append(details('来源线索',applicationCheck.references.map(source)));
+    card.append(el('h3','缺项与责任人'));
+    for(const item of applicationCheck.items) card.append(row(item.title+' · '+item.owner,item.next));
+    result.append(card);
+  }
+  if(submission){
+    const title='提交准备度核对';
+    const card=section(title);
+    card.setAttribute('role','region');card.setAttribute('aria-label',title);
+    card.append(el('p',(submission.ready?'经办记录齐备':'提交准备仍有缺项')+' · 经办记录 '+submission.reviewed+'／'+submission.items.length,'status'));
+    card.append(row('办理通道',submission.channel ?? '待核'));
+    card.append(row('实际申请人',submission.applicants.join('、') || '待补'));
+    for(const item of submission.items){
+      const node=row(item.title+' · '+item.status,(item.record?.responsible ?? item.owner)+'。'+item.next);
+      if(item.record) node.append(el('p','经办人 '+item.record.reviewer+' · '+item.record.checkedAt+' · '+item.record.basis,'sub'));
+      if(item.choices.length) node.append(details('原件及指纹',item.choices.map(file=>row(file.path,file.hash))));
+      if(item.reviewable) node.append(details('记录'+item.title+'复核',[submissionForm(item)]));
+      card.append(node);
+    }
+    result.append(card);
+  }
+  if(correction?.notices.length || correction?.items.length){
+    const card=section('补正事项');
+    for(const item of correction.items){
+      const node=row(item.issue+' · '+item.status,item.owner+' · '+item.notice.path+' 第 '+item.notice.page+' 页');
+      node.append(el('p',item.affects.map(key=>correctionMaterials[key]).join('、')+
+        (item.links.length ? ' · '+item.links.map(file=>file.path).join('、') : ''),'sub'));
+      if(correction.notices.length) node.append(details('更新此项', [correctionForm(correction.notices,item)]));
+      card.append(node);
+    }
+    if(correction.notices.length) card.append(details('登记通知事项',[correctionForm(correction.notices)]));
+    result.append(card);
+  }
+  if(audit){
+    const card=section('终件复验');
+    const scoreboard=el('div',undefined,'scoreboard');
+    for(const [label,score] of [['整理成品质量',audit.quality],['正式提交准备度',audit.formal]]){
+      const cell=el('div',undefined,'score');cell.append(el('span',label,'sub'),el('strong',score+'%'));scoreboard.append(cell);
+    }
+    card.append(scoreboard,el('p',audit.externalStatus+'。'));
+    if(audit.valid && audit.work.deliverables.length) {
+      const scope=details('应交材料与实际取件',audit.work.deliverables.map(item=>row(
+        item.title+' · '+item.status,
+        [...item.files.map(file=>file.path),...item.missing.map(title=>'缺 '+title)].join('；'))));
+      scope.open=true;card.append(scope);
+    }
+    const files=base()+'/download/'+audit.id;
+    if(audit.valid){
+      const buttons=el('div',undefined,'buttons');
+      buttons.append(link('下载内部审阅包',files+'/bundle',true),
+        link('下载提交准备度核对',files+'/submission'));card.append(buttons);
+      card.append(details('逐件下载（'+audit.allowed.length+'）',audit.allowed.map((item,index)=>{
+        const node=el('div',undefined,'row');node.append(link(item.path,files+'/'+index));return node;
+      })));
+      if(audit.drafts?.length) {
+        const pending=details('包内待核草稿（'+audit.drafts.length+'）',
+          audit.drafts.map(({file,reason})=>row('待核草稿/'+file.path,reason)));
+        pending.open=true;card.append(pending);
+      }
+      if(audit.retained?.length) card.append(details('包内参考与待核原件（'+audit.retained.length+'）',
+        audit.retained.map(item=>row(item.bundlePath,item.reason))));
+      if(audit.transcripts?.length) card.append(details('包内扫描识别文本（'+audit.transcripts.length+'）',
+        audit.transcripts.map(item=>row('识别文本/'+item.path,'供检索和校读，内容以原 PDF 为准。'))));
+    } else card.append(el('p','审核回执已失效，请重新运行当前版本。','status error'));
+    card.append(details('七项验收',audit.rows.map(item=>{
+      const node=row(item.id+' '+item.title+' · '+item.status,item.evidence);
+      for(const finding of item.findings) node.append(el('p',finding.path+' '+finding.location+' '+finding.detail,'warn'));
+      return node;
+    })));
+    if(audit.runtimeEvidence){
+      const check=audit.runtimeEvidence;
+      card.append(details('R5 同版实操核对',[
+        row(check.status,check.detail),
+        ...check.records.flatMap(record=>[
+          row(record.path+' · '+record.status,record.detail),
+          ...record.steps.map(step=>row(step.action,step.status+'。'+step.detail+
+            (step.role ? ' 角色 '+step.role+'。前置 '+step.precondition+'。预期 '+step.expected+'。' : '')+
+            (step.proof ? ' 结果 '+step.proof.path+'。' : '')+
+            (step.locations?.length ? ' 终件 '+step.locations.map(hit=>hit.path+
+              (hit.page ? ' 第 '+hit.page+' 页' : '')+' 第 '+hit.line+' 行').join('、')+'。' : ''))),
+        ]),
+      ]));
+    }
+    if(audit.featureCoverage?.length || audit.coverageMissing?.length) {
+      card.append(details('上传材料中的功能与出处',[
+        ...audit.featureCoverage.flatMap(manual=>manual.features.map(feature=>row(feature.name,
+          manual.path+' 第 '+feature.heading.page+' 页第 '+feature.heading.line+' 行。'+
+          (feature.complete ? feature.source.map(ref=>ref.path+' 第 '+ref.line+' 行').join('、') : '步骤或源码出处待核。')))),
+        ...audit.coverageMissing.map(hit=>row(hit.name+' · 待核',hit.path+' 第 '+hit.line+' 行')),
+      ]));
+    }
+    if(audit.selfReview?.reviews.length) {
+      const check=details('自备说明书逐功能核对',audit.selfReview.reviews.flatMap(manual=>[
+        row(manual.path+' · '+manual.status,manual.detail),
+        ...manual.features.map(feature=>row(feature.name+' · '+feature.status,[
+          feature.heading && '终件第 '+feature.heading.page+' 页第 '+feature.heading.line+' 行',
+          ...feature.source.map(ref=>ref ? ref.path+' 第 '+ref.line+' 行' : '源码出处待核'),
+          ...feature.steps.map(step=>step ? step.role+'，'+step.precondition+'，'+step.action+
+            ' → '+step.expected+'。'+(step.runtime ? '实际结果 '+step.runtime.output.path :
+              step.conflict ? '同版实际结果与正文不符' :
+              step.inManual ? '实际结果待补' : '正文步骤待核') : '步骤清单不完整'),
+          ...feature.form.map(hit=>'表内功能 '+hit.path+' 第 '+hit.line+' 行'),
+        ].filter(Boolean).join('。'))),
+        ...(manual.extra ?? []).map(hit=>row('正文范围待核',hit.name+' 第 '+hit.page+' 页')),
+        ...(manual.extraForm ?? []).map(hit=>row('表内范围待核',hit.name+' '+hit.path+' 第 '+hit.line+' 行')),
+      ]));
+      check.open=true;card.append(check);
+    }
+    if(audit.layout?.length) card.append(details('一般交存格式核对',audit.layout.map(item=>{
+      const pages=item.pages;
+      const counts=(test)=>pages.filter(test).map(page=>page.number).join('、') || '无';
+      const min=pages.length ? Math.min(...pages.map(page=>page.lines)) : '待核';
+      return row(item.path,'回读 '+pages.length+' 页，最少 '+min+' 行，每页门槛 '+item.minimum+
+        ' 行。行数待核页 '+counts(page=>page.lines<item.minimum)+'；页码待核页 '+counts(page=>page.pageNumber!==page.number)+
+        '；A4 待核页 '+counts(page=>!page.a4)+'；名称或版本待核页 '+counts(page=>page.name!==true || !page.version)+'。'+item.scope);
+    })));
+    if(audit.observations.length) card.append(details('专项核对',audit.observations.map(item=>row(item.path,item.detail))));
+    if(audit.issues.length){
+      const issues=details('退回 '+audit.issues.length+' 项',audit.issues.map(item=>row(item.id+' '+item.path,item.location+' '+item.detail)));
+      issues.open=true;card.append(issues);
+    }
+    card.append(details('待补与责任人（'+audit.actions.length+'）',audit.actions.map(item=>row(item.owner+' · '+item.title,item.detail))));
+    result.append(card);
+  }
+  if(candidate){
+    const card=section('实际写回 '+candidate.changes.length+' 处');
+    if(!candidate.changes.length) card.append(el('p','当前材料没有具备写回依据的改动。'));
+    else for(const change of candidate.changes){
+      const node=row(change.path+' · '+change.loc,change.evidence);
+      const comparison=el('div',undefined,'change');
+      comparison.append(el('del',change.before),el('br'),el('ins',change.after));node.append(comparison);card.append(node);
+    }
+    result.append(card);
+  }
+  const inventory=section('材料清点');
+  const report=preflight?.report;
+  inventory.append(el('p','收到 '+entries.length+' 件 · 同内容附件 '+(preflight?.duplicates.length ?? 0)+' 件 · 未纳入 '+current.skipped.length+' 件'));
+  if(preflight?.work?.needsConfirmation) inventory.append(row('请确认应交材料','请勾选本次需要的文件，并点击确认版本。'));
+  if(preflight?.work?.readOnly) inventory.append(row('处理方式','只读复核现有材料'));
+  if(preflight?.work?.scopeChange){
+    const change=preflight.work.scopeChange;
+    for(const [label,keys] of [['新增',change.added],['撤销',change.removed],['保留',change.retained]]){
+      inventory.append(row(label,keys.map(key=>materialTitles[key]).join('、') || '无'));
+    }
+    inventory.append(row('重新处理',change.affected.join('、')));
+  }
+  if(preflight?.work) inventory.append(row('本次应交材料',preflight.work.expected.map(key=>materialTitles[key]).join('、') ||
+    '未指定，在上方确认范围后可重新预检。'));
+  for(const gap of preflight?.work?.readingGaps ?? []) inventory.append(row(gap.path,gap.detail));
+  if(preflight?.choice) inventory.append(el('p','固定源码 '+preflight.choice.softwareName+' '+preflight.choice.snapshot,'status path'));
+  if(preflight?.sourceConflicts?.length){
+    const findings=details('源码版本不符（'+preflight.sourceConflicts.length+'）',
+      preflight.sourceConflicts.map(item=>row(item.path+' · '+item.location,item.detail)));
+    findings.open=true;inventory.append(findings);
+  }
+  const scans=report?.files.filter(file=>file.ocr) ?? [];
+  if(scans.length) inventory.append(details('扫描核读（'+scans.length+'）',scans.map(item=>row(item.path,
+    [item.ocr.pages.length?'已识别第 '+item.ocr.pages.join('、')+' 页。':'',
+      item.ocr.unresolved.length?'仍需核读第 '+item.ocr.unresolved.join('、')+' 页。':''].join('')))));
+  if(report?.versionEvidence.length) inventory.append(details('版本证据（'+report.versionEvidence.length+'）',
+    report.versionEvidence.map(item=>row(item.value+' '+item.path,item.loc))));
+  if(preflight?.duplicates.length) inventory.append(details('同内容附件',preflight.duplicates.map(item=>row(item.path,item.original))));
+  inventory.append(details('原件清单（'+entries.length+'）',entries.map(item=>{
+    const node=el('div',undefined,'row split');
+    const parsed=report?.files.find(file=>file.path===item.path);
+    const label=el('span',item.path+(parsed?.pageCount?' · '+parsed.pageCount+' 页':'')+(parsed?.unreadable?' · 待核读':''),'path');
+    const button=el('button','撤回','withdraw');
+    button.setAttribute('aria-label','撤回 '+item.path);
+    button.onclick=()=>act(base()+'/withdraw?path='+encodeURIComponent(item.path),'正在重新清点。');
+    node.append(label,button);return node;
+  })));
+  result.append(inventory);
+}
+function selected(){
+  return [...$('files').files,...$('folder').files,...dropped];
+}
+const attachmentPath=file=>safePath(file.webkitRelativePath || file.name);
+function selection(){
+  const files=selected();
+  const accepted=files.filter(attachmentPath).length;
+  $('selection').textContent=files.length?'可上传 '+accepted+' 件，忽略 '+(files.length-accepted)+' 件。按相对路径识别同名替换。':'可拖入文件，单案最多 320 件、48 MiB。';
+}
+for(const id of ['files','folder']) $(id).addEventListener('change',selection);
+$('drop').ondragover=event=>{event.preventDefault();$('drop').classList.add('on');};
+$('drop').ondragleave=()=>$('drop').classList.remove('on');
+$('drop').ondrop=event=>{event.preventDefault();$('drop').classList.remove('on');dropped=[...event.dataTransfer.files];selection();};
+$('upload').onsubmit=async event=>{
+  event.preventDefault();
+  const files=selected().filter(attachmentPath);
+  if(!files.length){notice('请先选择可上传的材料。',true);return;}
+  const body=new FormData();
+  for(const file of files){body.append('files',file);body.append('paths',attachmentPath(file));}
+  body.append('request',$('request').value);
+  const prior=current;
+  await act(caseId?base()+'/intake':'/api/cases','正在清点和读取材料。',body);
+  if(current!==prior && $('notice').hidden){$('files').value='';$('folder').value='';dropped=[];selection();}
+};
+$('process').onclick=()=>act(base()+'/process','正在写回候选、生成可交存件并复验实际文件。');
+$('save-request').onclick=()=>act(base()+'/request','正在按更新后的说明重新预检。',
+  JSON.stringify({request:$('saved-request').value}));
+$('retry-preflight').onclick=()=>act(base()+'/preflight','正在读取原件。');
+$('retry').onclick=()=>act(base()+'/audit','正在读取当前候选。');
+$('target').onsubmit=event=>{
+  event.preventDefault();
+  const scope=$('custom-scope').checked?materialInputs().filter(input=>input.checked).map(input=>input.value).join(','):'auto';
+  const query=new URLSearchParams({version:$('version').value,softwareName:$('software-name').value,scope,
+    snapshot:$('snapshot').checked?current.preflight.choice.snapshot:''});
+  act(base()+'/target?'+query,'正在核对申报对象和应交材料。');
+};
+async function resume(){
+  if(!caseId)return;
+  try{
+    current=await call(base());render();
+    if(current.busy){
+      setBusy(true);notice('正在处理当前案卷。');
+      setTimeout(resume,1100);
+    } else {setBusy(false);notice('');}
+  }catch(error){setBusy(false);notice(error.message,true);}
+}
+resume();
+</script>
+</body>
+</html>

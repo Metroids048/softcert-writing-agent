@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>Vditor 中文编辑器操作取证</title>
+<link rel="stylesheet" href="/dist/index.css">
+<style>body{margin:36px auto;max-width:1020px;font:16px system-ui;color:#21242a} h1{font-size:24px}</style>
+<h1>Vditor 中文编辑器</h1><div id="editor"></div>
+<script src="/dist/index.min.js"></script>
+<script>
+window.editor = new Vditor('editor', {
+  lang:'zh_CN', mode:'sv', height:540, cdn:location.origin,
+  cache:{enable:false}, preview:{delay:0, hljs:{enable:false}},
+  after(){document.body.dataset.ready = 'yes';}
+});
+</script></html>

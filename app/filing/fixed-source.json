@@ -1,0 +1,59 @@
+{
+  "name": "Yat-CAShed 缓存感知调度软件",
+  "version": "V1.0",
+  "source": {
+    "repository": "https://github.com/mafuquan430/Yat-CAshed",
+    "commit": "910f060f92eba0495bfcf8d86279621717cb7e39",
+    "archiveSha256": "451c39cd3d41c103229b31ef52bebb255098030f2e26d31e2f5aa63b37e554dc",
+    "files": [
+      {
+        "path": "linux-6.8-main/include/linux/sched/yat_casched.h",
+        "sha256": "784a3c89c5c7f486c238a79b97d7b28c837e7f3c5642bfb0575cfb5f3059f93d"
+      },
+      {
+        "path": "linux-6.8-main/include/trace/events/yat_casched.h",
+        "sha256": "77dd29346eb0d50c20073e01eb5f16d2cf7715cf198807598ae88c7938787458"
+      },
+      {
+        "path": "linux-6.8-main/kernel/sched/yat_casched.c",
+        "sha256": "b0eee5557f699dbbbebe21dbcd1d27d7ab431b889ea3977f9916cfa230c130b9"
+      },
+      {
+        "path": "linux-6.8-main/boot_test_scripts/yat_bench.c",
+        "sha256": "7c4a518f9fa46f2d2d48c3b3dfabe2263b596a8398fab62069393266789ae431"
+      },
+      {
+        "path": "linux-6.8-main/boot_test_scripts/yat_simple_test.c",
+        "sha256": "9a13ddc46d922883329946f666b6376f678937abe7e36b31cca9950e33197f2d"
+      },
+      {
+        "path": "linux-6.8-main/boot_test_scripts/yat_affinity_test.c",
+        "sha256": "8e0183222bd567a44f69d6168e7a86bf5054e6f42eee0656ca8c285460c2ea29"
+      },
+      {
+        "path": "linux-6.8-main/yat_test_scripts/compare_cfs_vs_yat.sh",
+        "sha256": "9dcb1bb28eb2e17320fb1ac202672b7429fd644bc06a6afd637c3f0c3352a4b2"
+      },
+      {
+        "path": "linux-6.8-main/yat_test_scripts/create_test_initramfs.sh",
+        "sha256": "e12dd3fa4dc5896a754281b27278b84f4ee41851c27aaf4464b67b750b32a514"
+      },
+      {
+        "path": "scripts/run_kernel_repeats.sh",
+        "sha256": "cf7a7e9168d93c87eb9cd878c729c4d4420e44469900027609f5a953fb0df97d"
+      },
+      {
+        "path": "scripts/check_numbers.py",
+        "sha256": "603fa75314a73318b411238d51b34b94d3edf0d86e7cc4164e76772d37b84139"
+      },
+      {
+        "path": "scripts/check_names.py",
+        "sha256": "a226af36be656b9bc6005ec9bc26ae0d37b7a82e91607e470ab0c0d457e2a9be"
+      },
+      {
+        "path": "scripts/check_docs.py",
+        "sha256": "bda0b4a1e6a2a51d07108e992115de2f30421883b67d9978905a82a9ac67538d"
+      }
+    ]
+  }
+}
